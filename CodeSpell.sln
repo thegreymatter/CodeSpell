@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSpell", "CodeSpell\CodeSpell.csproj", "{A9E68C3D-E082-464F-B901-18A92F8D09D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSpell.Tests", "CodeSpell.Tests\CodeSpell.Tests.csproj", "{B07AC62C-F334-4FEA-9996-F4F50D3D83E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9E68C3D-E082-464F-B901-18A92F8D09D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E68C3D-E082-464F-B901-18A92F8D09D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E68C3D-E082-464F-B901-18A92F8D09D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E68C3D-E082-464F-B901-18A92F8D09D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B07AC62C-F334-4FEA-9996-F4F50D3D83E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B07AC62C-F334-4FEA-9996-F4F50D3D83E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B07AC62C-F334-4FEA-9996-F4F50D3D83E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B07AC62C-F334-4FEA-9996-F4F50D3D83E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
