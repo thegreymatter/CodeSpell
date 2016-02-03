@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using CodeSpell.SpellEngine;
 
 namespace CodeSpell
@@ -17,35 +12,55 @@ namespace CodeSpell
 
 		private static void Main(string[] args)
 		{
-			if (args.Length < 2)
+			if (args.Length != 2)
 			{
-				Console.WriteLine("scan list was not entered " + Environment.NewLine +
-								  "CodeSpell.exe <ReportOutputPath> [File Search pattern] [File Search pattern] ..." +
-								  Environment.NewLine +
-								  "Example - " + Environment.NewLine +
-								  "CodeSpell.exe \"\" \"C:\\dev\\*\\Views\\*.aspx\" \"C:\\dev\\**\\*.ascx\"");
-				return;
+				Console.WriteLine(string.Concat("scan list was not entered ",
+					Environment.NewLine,
+					"CodeSpell.exe <ReportOutputPath> <FilesSpecsPath>",
+					Environment.NewLine,
+					"Example - ",
+					Environment.NewLine,
+					"CodeSpell.exe \"Report.xml\" \"FilesSearchRules.txt\""));
 			}
-
-			var fileset = new HashSet<string>();
-			var reportName = args[0];
-			using (XmlErrorWriter writer = new XmlErrorWriter(reportName))
+			else
 			{
-				foreach (var arg in args.Skip(1))
+				var fileset = new HashSet<string>();
+				var filesetToExclude = new HashSet<string>();
+				var reportName = @"Report.xml";
+				var fileSpecsPath = @"FileSpecs.txt";
+
+				var fileSpecs = GetFileSpecs(fileSpecsPath);
+
+				using (var writer = new XmlErrorWriter(reportName))
 				{
-					fileset.UnionWith(FileMatcher.GetFiles("", arg));
+					foreach (var fileSpec in fileSpecs)
+					{
+						if (fileSpec.StartsWith("-:"))
+						{
+							filesetToExclude.UnionWith(FileMatcher.GetFiles("", fileSpec.Remove(0, 2)));
+						}
+						else
+						{
+							fileset.UnionWith(FileMatcher.GetFiles("", fileSpec));
+						}
+					}
 
+					fileset.ExceptWith(filesetToExclude);
+					var engine = new SpellCheckEngine();
+
+					var misspellingCount = engine.AnalyzeFilesForMispellings(fileset, writer);
+
+					Console.WriteLine("##teamcity[buildStatisticValue key='misspellingCount' value='" + misspellingCount + "']");
 				}
-				SpellCheckEngine engine = new SpellCheckEngine();
-
-				var misspellingCount = engine.AnalyzeFilesForMispellings(fileset, writer);
-
-				Console.WriteLine("##teamcity[buildStatisticValue key='misspellingCount' value='" + misspellingCount + "']");
 			}
 		}
 
+		private static string[] GetFileSpecs(string searchRulesFileName)
+		{
+			if (!File.Exists(searchRulesFileName))
+				Console.WriteLine("The given files search rules path was not found.");
 
+			return File.ReadAllLines(searchRulesFileName);
+		}
 	}
 }
-
-
