@@ -100,7 +100,7 @@ namespace CodeSpell
 			}
 		}
 		// Word break characters.  Specifically excludes: _ . ' @
-		private const string wordBreakChars = ",<>?;:\"[]{}|-=+~!#$%^&*() \t”“’�";
+		private const string wordBreakChars = ",<>?;:\"[]{}|-=+~!$%^&*() \t”“’�";
 
 
 		/// <summary>
@@ -147,8 +147,8 @@ namespace CodeSpell
 			if (word.Length < 3)
 				return false;
 
-			// Check for a period or an at-sign in the word (things that look like filenames and e-mail addresses)
-			if (word.IndexOfAny(new[] { '.', '@','\\','/' }) >= 0)
+			// Check for a period or an at-sign in the word (things that look like filenames, e-mail addresses or rgb colors)
+			if (word.IndexOfAny(new[] { '.', '@','\\','/', '#' }) >= 0)
 				return false;
 
 			// Check for underscores and digits

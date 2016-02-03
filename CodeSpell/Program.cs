@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using CodeSpell.SpellEngine;
 
 namespace CodeSpell
@@ -26,8 +27,8 @@ namespace CodeSpell
 			{
 				var fileset = new HashSet<string>();
 				var filesetToExclude = new HashSet<string>();
-				var reportName = @"Report.xml";
-				var fileSpecsPath = @"FileSpecs.txt";
+				var reportName = args[0];
+				var fileSpecsPath = args[1];
 
 				var fileSpecs = GetFileSpecs(fileSpecsPath);
 
@@ -55,12 +56,12 @@ namespace CodeSpell
 			}
 		}
 
-		private static string[] GetFileSpecs(string searchRulesFileName)
+		private static IEnumerable<string> GetFileSpecs(string searchRulesFileName)
 		{
 			if (!File.Exists(searchRulesFileName))
 				Console.WriteLine("The given files search rules path was not found.");
 
-			return File.ReadAllLines(searchRulesFileName);
+			return File.ReadAllLines(searchRulesFileName).Where(rule => !string.IsNullOrWhiteSpace(rule));
 		}
 	}
 }
