@@ -22,6 +22,7 @@ namespace CodeSpell
 
 			_spellingAnalyzerDictionary.Add(".aspx", htmlSpellingProvider);
 			_spellingAnalyzerDictionary.Add(".ascx", htmlSpellingProvider);
+			_spellingAnalyzerDictionary.Add(".html", htmlSpellingProvider);
 			_spellingAnalyzerDictionary.Add(".cs", csSpellingProvider);
 			_spellingAnalyzerDictionary.Add(".js", csSpellingProvider);
 		}
